@@ -2,3 +2,9 @@
     font-family: 'CMU Serif';
     src: url('./src/RMathAnim/cmunbi.ttf');
 }
+
+body {
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+}

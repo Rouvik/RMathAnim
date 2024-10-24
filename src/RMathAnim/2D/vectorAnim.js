@@ -27,24 +27,21 @@ class AnimatedVector extends RAnimation {
         AnimatedVector.cxt = cxt;
     }
 
-    update() {
+    update() {        
         super.update();
-
         AnimatedVector.cxt.beginPath();
         AnimatedVector.cxt.strokeStyle = this.options.color;
         AnimatedVector.cxt.fillStyle = this.options.color;
-
+        
         this.animPosVec = this.vec.mul(new vec2(this.t_prime));
-
+        
         AnimatedVector.cxt.moveTo(this.start.x, this.start.y);
         AnimatedVector.cxt.lineTo(this.start.x + this.animPosVec.x, this.start.y + this.animPosVec.y);
         AnimatedVector.cxt.stroke();
-
-        AnimatedVector.cxt.beginPath();
+        
         AnimatedVector.cxt.moveTo(this.start.x + this.animPosVec.x, this.start.y + this.animPosVec.y);
         AnimatedVector.cxt.lineTo(this.start.x + this.animPosVec.x + this.leftArrowDir.x, this.start.y + this.animPosVec.y + this.leftArrowDir.y);
         AnimatedVector.cxt.lineTo(this.start.x + this.animPosVec.x + this.rightArrowDir.x, this.start.y + this.animPosVec.y + this.rightArrowDir.y);
         AnimatedVector.cxt.fill();
-
     }
 }

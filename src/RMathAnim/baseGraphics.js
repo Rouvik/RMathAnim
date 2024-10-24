@@ -33,7 +33,7 @@ class AnimatedText extends RAnimation {
             fontSize: 50
         }, options);
 
-        this.backColorFinalStr = `${this.options.backColorFinal.x}, ${this.options.backColorFinal.y}, ${this.options.backColorFinal.z}`;
+        this.backColorFinalStr = `rgb(${this.options.backColorFinal.x}, ${this.options.backColorFinal.y}, ${this.options.backColorFinal.z})`;
     }
 
     static setContext(cxt) {
@@ -47,8 +47,8 @@ class AnimatedText extends RAnimation {
     update() {
         AnimatedText.cxt.beginPath();
         
-        if(super.update()) {
-            AnimatedText.cxt.fillStyle = this.backColorFinalStr;
+        if(super.update()) {            
+            AnimatedText.cxt.fillStyle = this.backColorFinalStr;            
             AnimatedText.cxt.strokeStyle = this.options.lineColor;
             AnimatedText.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
             AnimatedText.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
@@ -63,5 +63,7 @@ class AnimatedText extends RAnimation {
         AnimatedText.cxt.setLineDash([this.t_prime * this.options.dashLineMax, this.options.dashLineMax]);
         AnimatedText.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
         AnimatedText.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
+
+        AnimatedText.cxt.setLineDash([]); // reset line dash after call
     }
 }
