@@ -5,7 +5,7 @@
  * @param {number} width The width of the canvas
  * @param {number} height The height of the canvas
  * @param {CanvasRenderingContext2DSettings} options Options to be passed for the canvas
- * @returns An object with the canvas and the canvas context both in it --> {sc, cxt}
+ * @returns {Object} An object with the canvas and the canvas context both in it --> {sc, cxt}
  */
 function CreateCanvas(width, height, options = {alpha: true}) {
     const sc = document.createElement("canvas");

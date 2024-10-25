@@ -1,3 +1,24 @@
+class RGlobal {
+    static cxt = null;
+    static sc = null;
+
+    static setContext(cxt) {
+        if (!(cxt instanceof CanvasRenderingContext2D)) {
+            throw new Error("[RGlobal Error] Bad canvas context: " + cxt);
+        }
+
+        RGlobal.cxt = cxt;
+    }
+
+    static setCanvas(sc) {
+        if (!(sccxt instanceof HTMLCanvasElement)) {
+            throw new Error("[RGlobal Error] Bad canvas: " + sc);
+        }
+
+        RGlobal.sc = sc;
+    }
+}
+
 class RAnimation {
     constructor(interpolerationFn = (x) => x, steps = 100) {
         this.interpolerationFn = interpolerationFn;
@@ -16,9 +37,7 @@ class RAnimation {
     }
 }
 
-class AnimatedText extends RAnimation {
-    static cxt = null;
-
+class RAText extends RAnimation {
     constructor(content, x, y, maxWidth, options = {}) {
         super();
         this.content = content;
@@ -36,34 +55,26 @@ class AnimatedText extends RAnimation {
         this.backColorFinalStr = `rgb(${this.options.backColorFinal.x}, ${this.options.backColorFinal.y}, ${this.options.backColorFinal.z})`;
     }
 
-    static setContext(cxt) {
-        if (!(cxt instanceof CanvasRenderingContext2D)) {
-            throw new Error("[Animated Text Error] Bad canvas rendering context: " + cxt);
-        }
-
-        AnimatedText.cxt = cxt;
-    }
-
-    update() {
-        AnimatedText.cxt.beginPath();
+    update() {        
+        RGlobal.cxt.beginPath();
         
         if(super.update()) {            
-            AnimatedText.cxt.fillStyle = this.backColorFinalStr;            
-            AnimatedText.cxt.strokeStyle = this.options.lineColor;
-            AnimatedText.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
-            AnimatedText.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
+            RGlobal.cxt.fillStyle = this.backColorFinalStr;            
+            RGlobal.cxt.strokeStyle = this.options.lineColor;
+            RGlobal.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
+            RGlobal.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
             return;
         }
         
         const fillColor = this.options.backColorInit.mul(new vec3(1 - this.t_prime)).add(this.options.backColorFinal.mul(new vec3(this.t_prime)));
-        AnimatedText.cxt.fillStyle = `rgb(${fillColor.x}, ${fillColor.y}, ${fillColor.z})`;
-        AnimatedText.cxt.strokeStyle = this.options.lineColor;
-        AnimatedText.cxt.font = `${this.options.fontSize}px CMU Serif`;
+        RGlobal.cxt.fillStyle = `rgb(${fillColor.x}, ${fillColor.y}, ${fillColor.z})`;
+        RGlobal.cxt.strokeStyle = this.options.lineColor;
+        RGlobal.cxt.font = `${this.options.fontSize}px CMU Serif`;
 
-        AnimatedText.cxt.setLineDash([this.t_prime * this.options.dashLineMax, this.options.dashLineMax]);
-        AnimatedText.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
-        AnimatedText.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
+        RGlobal.cxt.setLineDash([this.t_prime * this.options.dashLineMax, this.options.dashLineMax]);
+        RGlobal.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
+        RGlobal.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
 
-        AnimatedText.cxt.setLineDash([]); // reset line dash after call
+        RGlobal.cxt.setLineDash([]); // reset line dash after call
     }
 }
