@@ -38,7 +38,7 @@ class RAnimation {
 }
 
 class RAText extends RAnimation {
-    constructor(content, x, y, maxWidth, options = {}) {
+    constructor(content, x, y, maxWidth = undefined, options = {}) {
         super();
         this.content = content;
         this.x = x;
@@ -48,7 +48,7 @@ class RAText extends RAnimation {
             backColorInit: new vec3(0, 0, 0),
             backColorFinal: new vec3(255, 255, 255),
             lineColor: 'rgb(255, 255, 255)',
-            dashLineMax: 100,
+            maxLineDash: 100,
             fontSize: 50
         }, options);
 
@@ -71,7 +71,7 @@ class RAText extends RAnimation {
         RGlobal.cxt.strokeStyle = this.options.lineColor;
         RGlobal.cxt.font = `${this.options.fontSize}px CMU Serif`;
 
-        RGlobal.cxt.setLineDash([this.t_prime * this.options.dashLineMax, this.options.dashLineMax]);
+        RGlobal.cxt.setLineDash([this.t_prime * this.options.maxLineDash, this.options.maxLineDash]);
         RGlobal.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
         RGlobal.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RAVector</title>
+    <title>JSDoc: Class: RAPoly</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RAVector</h1>
+    <h1 class="page-title">Class: RAPoly</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAVector<span class="signature">(start, end, options)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Animated vector, extends the RAnimation class and uses combination this.RVector to implement RVector in it</div>
+            <div class="class-description">Animated polygon rendering class</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="RAVector"><span class="type-signature"></span>new RAVector<span class="signature">(start, end, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RAPoly"><span class="type-signature"></span>new RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Creates an animated RVector<p style="background: gold; border: 3px solid goldenrod; border-radius: 5px; padding: 5px;">Note: this.RVector is used to compose RVector class, all vector properties must be accessed from "this.RVector"</p>
+    Creates an RAPoly object to render animated polygons to screen
 </div>
 
 
@@ -89,13 +89,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">vec3</span>
+<span class="param-type">Array</span>
 
 
             
@@ -105,30 +105,7 @@
 
             
 
-            <td class="description last">The starting position vector to the vector</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>end</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">vec3</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ending position vector to the vector</td>
+            <td class="description last">An array of x, y coordinates placed side by side for the polygon, eg = [x0, y0, x1, y1, x2, y2, ..., xn, yn]</td>
         </tr>
 
     
@@ -151,7 +128,7 @@
 
             
 
-            <td class="description last">Options {color: vec3, arrowSize: number} used to descrive the vector</td>
+            <td class="description last">Options to control the looks of the polygon {lineColor: string, backColor: vec3, maxAlpha: number(0 - 1)}</td>
         </tr>
 
     
@@ -192,7 +169,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_vectorAnim.js.html">2D/vectorAnim.js</a>, <a href="2D_vectorAnim.js.html#line50">line 50</a>
+        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -256,7 +233,7 @@
 
 
 <div class="description">
-    Calls update of RAnimation to update the this.t_prime value, updates this.RVector.tip and then callsthis.RVector.update() to render the newly animated vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -300,7 +277,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_vectorAnim.js.html">2D/vectorAnim.js</a>, <a href="2D_vectorAnim.js.html#line67">line 67</a>
+        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -344,7 +321,7 @@
 
 
 <div class="description">
-    Calls update of RAnimation to update the this.t_prime value, updates this.RVector.tip and then callsthis.RVector.update() to render the newly animated vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -388,7 +365,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_vectorAnim.js.html">2D/vectorAnim.js</a>, <a href="2D_vectorAnim.js.html#line67">line 67</a>
+        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -438,9 +415,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAVector<span class="signature">(start, end, options)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Animated vector, extends the RAnimation class and uses combination this.RVector to implement RVector in it</div>
+            <div class="class-description">Animated polygon rendering class</div>
         
     
 </header>
@@ -455,7 +432,7 @@
     
 
     
-    <h4 class="name" id="RAVector"><span class="type-signature"></span>new RAVector<span class="signature">(start, end, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RAPoly"><span class="type-signature"></span>new RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h4>
     
 
     
@@ -463,7 +440,7 @@
 
 
 <div class="description">
-    Creates an animated RVector<p style="background: gold; border: 3px solid goldenrod; border-radius: 5px; padding: 5px;">Note: this.RVector is used to compose RVector class, all vector properties must be accessed from "this.RVector"</p>
+    Creates an RAPoly object to render animated polygons to screen
 </div>
 
 
@@ -499,13 +476,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">vec3</span>
+<span class="param-type">Array</span>
 
 
             
@@ -515,30 +492,7 @@
 
             
 
-            <td class="description last">The starting position vector to the vector</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>end</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">vec3</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The ending position vector to the vector</td>
+            <td class="description last">An array of x, y coordinates placed side by side for the polygon, eg = [x0, y0, x1, y1, x2, y2, ..., xn, yn]</td>
         </tr>
 
     
@@ -561,7 +515,7 @@
 
             
 
-            <td class="description last">Options {color: vec3, arrowSize: number} used to descrive the vector</td>
+            <td class="description last">Options to control the looks of the polygon {lineColor: string, backColor: vec3, maxAlpha: number(0 - 1)}</td>
         </tr>
 
     
@@ -602,7 +556,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_vectorAnim.js.html">2D/vectorAnim.js</a>, <a href="2D_vectorAnim.js.html#line50">line 50</a>
+        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -666,7 +620,7 @@
 
 
 <div class="description">
-    Calls update of RAnimation to update the this.t_prime value, updates this.RVector.tip and then callsthis.RVector.update() to render the newly animated vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -710,7 +664,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_vectorAnim.js.html">2D/vectorAnim.js</a>, <a href="2D_vectorAnim.js.html#line67">line 67</a>
+        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -754,7 +708,7 @@
 
 
 <div class="description">
-    Calls update of RAnimation to update the this.t_prime value, updates this.RVector.tip and then callsthis.RVector.update() to render the newly animated vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -798,7 +752,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_vectorAnim.js.html">2D/vectorAnim.js</a>, <a href="2D_vectorAnim.js.html#line67">line 67</a>
+        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
