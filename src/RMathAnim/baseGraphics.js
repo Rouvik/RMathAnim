@@ -1,7 +1,14 @@
+/**
+ * A container class to store the CanvasRenderingContext2D and the HTMLCanvasElement to be referred by other animatables
+ */
 class RGlobal {
     static cxt = null;
     static sc = null;
 
+    /**
+     * Sets the canvas rendering context for RGlobal
+     * @param {CanvasRenderingContext2D} cxt The CanvasRenderingContext2D to set to RGlobal.cxt
+     */
     static setContext(cxt) {
         if (!(cxt instanceof CanvasRenderingContext2D)) {
             throw new Error("[RGlobal Error] Bad canvas context: " + cxt);
@@ -10,6 +17,10 @@ class RGlobal {
         RGlobal.cxt = cxt;
     }
 
+    /**
+     * Sets the HTMLCanvasElement for RGlobal
+     * @param {HTMLCanvasElement} sc The HTMLCanvasElement to set to RGlobal.sc
+     */
     static setCanvas(sc) {
         if (!(sccxt instanceof HTMLCanvasElement)) {
             throw new Error("[RGlobal Error] Bad canvas: " + sc);
@@ -19,7 +30,15 @@ class RGlobal {
     }
 }
 
+/**
+ * Base animation controls class
+ */
 class RAnimation {
+    /**
+     * Creates an animation class, must be extended by other animatables to be used properly
+     * @param {Function} [interpolerationFn=(x) => x] A bounded function on [0, 1] over which the animation will be mapped
+     * @param {number} [steps=100] The number of steps for which the animation will be run
+     */
     constructor(interpolerationFn = (x) => x, steps = 100) {
         this.interpolerationFn = interpolerationFn;
         this.ti = 1 / steps;
@@ -27,6 +46,11 @@ class RAnimation {
         this.t_prime = 0;
     }
 
+    /**
+     * Updates the this.t_prime value with the properly mapped t value for animation
+     * @returns true if the animation is over (used for optimisation)
+     * @returns false if the animation is NOT over yet
+     */
     update() {
         if (this.t > 1) {
             return true;
@@ -34,47 +58,5 @@ class RAnimation {
 
         this.t_prime = this.interpolerationFn(this.t += this.ti);
         return false;
-    }
-}
-
-class RAText extends RAnimation {
-    constructor(content, x, y, maxWidth = undefined, options = {}) {
-        super();
-        this.content = content;
-        this.x = x;
-        this.y = y;
-        this.maxWidth = maxWidth;
-        this.options = Object.assign({
-            backColorInit: new vec3(0, 0, 0),
-            backColorFinal: new vec3(255, 255, 255),
-            lineColor: 'rgb(255, 255, 255)',
-            maxLineDash: 100,
-            fontSize: 50
-        }, options);
-
-        this.backColorFinalStr = `rgb(${this.options.backColorFinal.x}, ${this.options.backColorFinal.y}, ${this.options.backColorFinal.z})`;
-    }
-
-    update() {        
-        RGlobal.cxt.beginPath();
-        
-        if(super.update()) {            
-            RGlobal.cxt.fillStyle = this.backColorFinalStr;            
-            RGlobal.cxt.strokeStyle = this.options.lineColor;
-            RGlobal.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
-            RGlobal.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
-            return;
-        }
-        
-        const fillColor = this.options.backColorInit.mul(new vec3(1 - this.t_prime)).add(this.options.backColorFinal.mul(new vec3(this.t_prime)));
-        RGlobal.cxt.fillStyle = `rgb(${fillColor.x}, ${fillColor.y}, ${fillColor.z})`;
-        RGlobal.cxt.strokeStyle = this.options.lineColor;
-        RGlobal.cxt.font = `${this.options.fontSize}px CMU Serif`;
-
-        RGlobal.cxt.setLineDash([this.t_prime * this.options.maxLineDash, this.options.maxLineDash]);
-        RGlobal.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
-        RGlobal.cxt.fillText(this.content, this.x, this.y, this.maxWidth);
-
-        RGlobal.cxt.setLineDash([]); // reset line dash after call
     }
 }

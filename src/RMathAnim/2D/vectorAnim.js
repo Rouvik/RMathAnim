@@ -6,7 +6,7 @@ class RVector {
      * Create a RVector
      * @param {vec3} start The starting position vector to the vector
      * @param {vec3} end The ending position vector to the vector
-     * @param {Object} options Options {color: vec3, arrowSize: number} used to descrive the vector
+     * @param {Object} [options={}] Options {color: vec3, arrowSize: number} used to descrive the vector
      */
     constructor(start, end, options = {}) {
         this.start = start;
@@ -50,10 +50,10 @@ class RVector {
 class RAVector extends RAnimation {
     /**
      * Creates an animated RVector
-     * <p style="background: gold; border: 3px solid goldenrod; border-radius: 5px; padding: 5px;">Note: this.RVector is used to compose RVector class, all vector properties must be accessed from "this.RVector"</p>
+     * <p style="background: gold; border: 3px solid goldenrod; border-radius: 5px; padding: 5px;"><b>Note:</b> this.RVector is used to compose RVector class, all vector properties must be accessed from "this.RVector"</p>
      * @param {vec3} start The starting position vector to the vector
      * @param {vec3} end The ending position vector to the vector
-     * @param {Object} options Options {color: vec3, arrowSize: number} used to descrive the vector
+     * @param {Object} [options={}] Options {color: vec3, arrowSize: number} used to descrive the vector
      */
     constructor(start, end, options = {}) {
         super();
@@ -81,7 +81,7 @@ class RAHueVector extends RAVector {
      * Creates a animated vector by extending RAVector
      * @param {vec3} start The starting position vector to the vector
      * @param {vec3} end The ending position vector to the vector
-     * @param {Object} options Options {color: vec3, arrowSize: number} used to descrive the vector
+     * @param {Object} [options={}] Options {color: vec3, arrowSize: number} used to descrive the vector
      */
     constructor(start, end, options = {}) {
         super(start, end, Object.assign({
