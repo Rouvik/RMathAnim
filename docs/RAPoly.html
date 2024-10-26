@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RAPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Animated polygon rendering class</div>
         
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="RAPoly"><span class="type-signature"></span>new RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RAPoly"><span class="type-signature"></span>new RAPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Creates an RAPoly object to render animated polygons to screen
+    Creates an RAPoly object to render animated polygons to screen<p style="background: gold; border: 3px solid goldenrod; border-radius: 5px; padding: 5px;"><b>Note:</b> this.RPoly is used to compose the static RPoly components to the RAPoly animation class, all properties to RPoly must be accessed from "this.RPoly"</p>
 </div>
 
 
@@ -77,7 +77,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -102,10 +106,61 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">An array of x, y coordinates placed side by side for the polygon, eg = [x0, y0, x1, y1, x2, y2, ..., xn, yn]</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>translate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="vec2.html">vec2</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    new vec2(0, 0)
+                
+                </td>
+            
+
+            <td class="description last">The position vector to translate to before drawing the polygon</td>
         </tr>
 
     
@@ -125,7 +180,23 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
             
 
             <td class="description last">Options to control the looks of the polygon {lineColor: string, backColor: vec3, maxAlpha: number(0 - 1)}</td>
@@ -169,7 +240,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line4">line 4</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -277,7 +348,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -365,7 +436,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -415,7 +486,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RAPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Animated polygon rendering class</div>
         
@@ -432,7 +503,7 @@
     
 
     
-    <h4 class="name" id="RAPoly"><span class="type-signature"></span>new RAPoly<span class="signature">(points, options)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RAPoly"><span class="type-signature"></span>new RAPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -440,7 +511,7 @@
 
 
 <div class="description">
-    Creates an RAPoly object to render animated polygons to screen
+    Creates an RAPoly object to render animated polygons to screen<p style="background: gold; border: 3px solid goldenrod; border-radius: 5px; padding: 5px;"><b>Note:</b> this.RPoly is used to compose the static RPoly components to the RAPoly animation class, all properties to RPoly must be accessed from "this.RPoly"</p>
 </div>
 
 
@@ -464,7 +535,11 @@
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -489,10 +564,61 @@
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">An array of x, y coordinates placed side by side for the polygon, eg = [x0, y0, x1, y1, x2, y2, ..., xn, yn]</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>translate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="vec2.html">vec2</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    new vec2(0, 0)
+                
+                </td>
+            
+
+            <td class="description last">The position vector to translate to before drawing the polygon</td>
         </tr>
 
     
@@ -512,7 +638,23 @@
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    {}
+                
+                </td>
             
 
             <td class="description last">Options to control the looks of the polygon {lineColor: string, backColor: vec3, maxAlpha: number(0 - 1)}</td>
@@ -556,7 +698,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line4">line 4</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -664,7 +806,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -752,7 +894,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="2D_polyAnim.js.html">2D/polyAnim.js</a>, <a href="2D_polyAnim.js.html#line35">line 35</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line80">line 80</a>
     </li></ul></dd>
     
 
@@ -798,13 +940,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="RAHueVector.html">RAHueVector</a></li><li><a href="RAPoly.html">RAPoly</a></li><li><a href="RAVector.html">RAVector</a></li><li><a href="RVector.html">RVector</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CreateCanvas">CreateCanvas</a></li><li><a href="global.html#CreateCanvasRecorder">CreateCanvasRecorder</a></li><li><a href="global.html#RColorStrToVec">RColorStrToVec</a></li><li><a href="global.html#RHueRotate">RHueRotate</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="RAHueVector.html">RAHueVector</a></li><li><a href="RAPoly.html">RAPoly</a></li><li><a href="RAText.html">RAText</a></li><li><a href="RAVector.html">RAVector</a></li><li><a href="RAnimation.html">RAnimation</a></li><li><a href="RGlobal.html">RGlobal</a></li><li><a href="RPoly.html">RPoly</a></li><li><a href="RVector.html">RVector</a></li><li><a href="vec2.html">vec2</a></li><li><a href="vec3.html">vec3</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CreateCanvas">CreateCanvas</a></li><li><a href="global.html#CreateCanvasRecorder">CreateCanvasRecorder</a></li><li><a href="global.html#RColorStrToVec">RColorStrToVec</a></li><li><a href="global.html#RHueRotate">RHueRotate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Oct 26 2024 03:48:39 GMT+0530 (India Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Oct 27 2024 03:15:24 GMT+0530 (India Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

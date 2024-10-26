@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RAHueVector</title>
+    <title>JSDoc: Class: RPoly</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RAHueVector</h1>
+    <h1 class="page-title">Class: RPoly</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Animated vector with changing hue</div>
+            <div class="class-description">Static polygon rendering class</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="RAHueVector"><span class="type-signature"></span>new RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RPoly"><span class="type-signature"></span>new RPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Creates a animated vector by extending RAVector
+    Creates an RPoly object to render static polygons to screen
 </div>
 
 
@@ -93,13 +93,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type">Array</span>
 
 
             
@@ -121,20 +121,20 @@
                 </td>
             
 
-            <td class="description last">The starting position vector to the vector</td>
+            <td class="description last">An array of x, y coordinates placed side by side for the polygon, eg = [x0, y0, x1, y1, x2, y2, ..., xn, yn]</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>end</code></td>
+                <td class="name"><code>translate</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type"><a href="vec2.html">vec2</a></span>
 
 
             
@@ -142,6 +142,8 @@
 
             
                 <td class="attributes">
+                
+                    &lt;optional><br>
                 
 
                 
@@ -153,10 +155,12 @@
             
                 <td class="default">
                 
+                    new vec2(0, 0)
+                
                 </td>
             
 
-            <td class="description last">The ending position vector to the vector</td>
+            <td class="description last">The position vector to translate to before drawing the polygon</td>
         </tr>
 
     
@@ -195,7 +199,7 @@
                 </td>
             
 
-            <td class="description last">Options {color: vec3, arrowSize: number} used to descrive the vector</td>
+            <td class="description last">Options to control the looks of the polygon {lineColor: string, backColor: vec3, maxAlpha: number(0 - 1)}</td>
         </tr>
 
     
@@ -236,7 +240,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line79">line 79</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -300,7 +304,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -344,7 +348,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -388,7 +392,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -432,7 +436,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -482,9 +486,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Animated vector with changing hue</div>
+            <div class="class-description">Static polygon rendering class</div>
         
     
 </header>
@@ -499,7 +503,7 @@
     
 
     
-    <h4 class="name" id="RAHueVector"><span class="type-signature"></span>new RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RPoly"><span class="type-signature"></span>new RPoly<span class="signature">(points, translate<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -507,7 +511,7 @@
 
 
 <div class="description">
-    Creates a animated vector by extending RAVector
+    Creates an RPoly object to render static polygons to screen
 </div>
 
 
@@ -547,13 +551,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>points</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type">Array</span>
 
 
             
@@ -575,20 +579,20 @@
                 </td>
             
 
-            <td class="description last">The starting position vector to the vector</td>
+            <td class="description last">An array of x, y coordinates placed side by side for the polygon, eg = [x0, y0, x1, y1, x2, y2, ..., xn, yn]</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>end</code></td>
+                <td class="name"><code>translate</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type"><a href="vec2.html">vec2</a></span>
 
 
             
@@ -596,6 +600,8 @@
 
             
                 <td class="attributes">
+                
+                    &lt;optional><br>
                 
 
                 
@@ -607,10 +613,12 @@
             
                 <td class="default">
                 
+                    new vec2(0, 0)
+                
                 </td>
             
 
-            <td class="description last">The ending position vector to the vector</td>
+            <td class="description last">The position vector to translate to before drawing the polygon</td>
         </tr>
 
     
@@ -649,7 +657,7 @@
                 </td>
             
 
-            <td class="description last">Options {color: vec3, arrowSize: number} used to descrive the vector</td>
+            <td class="description last">Options to control the looks of the polygon {lineColor: string, backColor: vec3, maxAlpha: number(0 - 1)}</td>
         </tr>
 
     
@@ -690,7 +698,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line79">line 79</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -754,7 +762,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -798,7 +806,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -842,7 +850,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the polygon to the screen
 </div>
 
 
@@ -886,7 +894,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_polyAnim.js.html">RMathAnim/2D/polyAnim.js</a>, <a href="RMathAnim_2D_polyAnim.js.html#line27">line 27</a>
     </li></ul></dd>
     
 

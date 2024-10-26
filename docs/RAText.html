@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RAHueVector</title>
+    <title>JSDoc: Class: RAText</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RAHueVector</h1>
+    <h1 class="page-title">Class: RAText</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RAText<span class="signature">(content, x, y, maxWidth<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Animated vector with changing hue</div>
+            <div class="class-description">Animates a text onto the canvas</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="RAHueVector"><span class="type-signature"></span>new RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RAText"><span class="type-signature"></span>new RAText<span class="signature">(content, x, y, maxWidth<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Creates a animated vector by extending RAVector
+    Creates an animated string RAText object
 </div>
 
 
@@ -93,13 +93,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>content</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type">string</span>
 
 
             
@@ -121,20 +121,20 @@
                 </td>
             
 
-            <td class="description last">The starting position vector to the vector</td>
+            <td class="description last">The string to render to the screen to animate</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>end</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type">number</span>
 
 
             
@@ -156,7 +156,79 @@
                 </td>
             
 
-            <td class="description last">The ending position vector to the vector</td>
+            <td class="description last">The x coordinate of the string</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The y coordinate of the string</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxWidth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The max width of the string to be rendered, as per CanvasContext2D.strokeText requirements</td>
         </tr>
 
     
@@ -195,7 +267,7 @@
                 </td>
             
 
-            <td class="description last">Options {color: vec3, arrowSize: number} used to descrive the vector</td>
+            <td class="description last">Options to configure the rendered string {backColorInit:vec3, backColorFinal:vec3, lineColor:string, maxLineDash:number, fontSize:number}</td>
         </tr>
 
     
@@ -236,7 +308,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line79">line 79</a>
+        <a href="RMathAnim_2D_textAnim.js.html">RMathAnim/2D/textAnim.js</a>, <a href="RMathAnim_2D_textAnim.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -300,7 +372,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the animated string
 </div>
 
 
@@ -344,7 +416,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_textAnim.js.html">RMathAnim/2D/textAnim.js</a>, <a href="RMathAnim_2D_textAnim.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -388,7 +460,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the animated string
 </div>
 
 
@@ -432,7 +504,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_textAnim.js.html">RMathAnim/2D/textAnim.js</a>, <a href="RMathAnim_2D_textAnim.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -482,9 +554,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RAText<span class="signature">(content, x, y, maxWidth<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Animated vector with changing hue</div>
+            <div class="class-description">Animates a text onto the canvas</div>
         
     
 </header>
@@ -499,7 +571,7 @@
     
 
     
-    <h4 class="name" id="RAHueVector"><span class="type-signature"></span>new RAHueVector<span class="signature">(start, end, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RAText"><span class="type-signature"></span>new RAText<span class="signature">(content, x, y, maxWidth<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -507,7 +579,7 @@
 
 
 <div class="description">
-    Creates a animated vector by extending RAVector
+    Creates an animated string RAText object
 </div>
 
 
@@ -547,13 +619,13 @@
 
         <tr>
             
-                <td class="name"><code>start</code></td>
+                <td class="name"><code>content</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type">string</span>
 
 
             
@@ -575,20 +647,20 @@
                 </td>
             
 
-            <td class="description last">The starting position vector to the vector</td>
+            <td class="description last">The string to render to the screen to animate</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>end</code></td>
+                <td class="name"><code>x</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="vec3.html">vec3</a></span>
+<span class="param-type">number</span>
 
 
             
@@ -610,7 +682,79 @@
                 </td>
             
 
-            <td class="description last">The ending position vector to the vector</td>
+            <td class="description last">The x coordinate of the string</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The y coordinate of the string</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxWidth</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">The max width of the string to be rendered, as per CanvasContext2D.strokeText requirements</td>
         </tr>
 
     
@@ -649,7 +793,7 @@
                 </td>
             
 
-            <td class="description last">Options {color: vec3, arrowSize: number} used to descrive the vector</td>
+            <td class="description last">Options to configure the rendered string {backColorInit:vec3, backColorFinal:vec3, lineColor:string, maxLineDash:number, fontSize:number}</td>
         </tr>
 
     
@@ -690,7 +834,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line79">line 79</a>
+        <a href="RMathAnim_2D_textAnim.js.html">RMathAnim/2D/textAnim.js</a>, <a href="RMathAnim_2D_textAnim.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -754,7 +898,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the animated string
 </div>
 
 
@@ -798,7 +942,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_textAnim.js.html">RMathAnim/2D/textAnim.js</a>, <a href="RMathAnim_2D_textAnim.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -842,7 +986,7 @@
 
 
 <div class="description">
-    Calls the RHueRotate() function to generate the rotated color and then draws the vector
+    Renders the animated string
 </div>
 
 
@@ -886,7 +1030,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="RMathAnim_2D_vectorAnim.js.html">RMathAnim/2D/vectorAnim.js</a>, <a href="RMathAnim_2D_vectorAnim.js.html#line97">line 97</a>
+        <a href="RMathAnim_2D_textAnim.js.html">RMathAnim/2D/textAnim.js</a>, <a href="RMathAnim_2D_textAnim.js.html#line33">line 33</a>
     </li></ul></dd>
     
 

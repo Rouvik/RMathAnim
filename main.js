@@ -22,17 +22,20 @@ let arr = [];
 const samples = 50;
 for (let i = 0; i < samples; i++) {
     let mag = ~~(Math.random() * 50 + 100);
-    arr.push(~~(Math.cos(2 * Math.PI / samples * i) * mag + 200), ~~(Math.sin(2 * Math.PI / samples * i) * mag + 200));
+    arr.push(~~(Math.cos(2 * Math.PI / samples * i) * mag), ~~(Math.sin(2 * Math.PI / samples * i) * mag));
 }
 
 // const poly = new RAPoly([50, 50, 100, 50, 100, 100, 50, 100], {maxLineDash: 200});
-const poly = new RAPoly(arr, {maxLineDash: 200});
+const poly = new RAPoly(arr, new vec2(150, 200));
+
+const staticPoly = new RPoly(arr, new vec2(450, 200));
 
 // let told = 0;
 
 function animate(t) {
     cxt.clearRect(0, 0, sc.width, sc.height);
     poly.update();
+    staticPoly.update();
 
     animVec.update();
     title.update();
