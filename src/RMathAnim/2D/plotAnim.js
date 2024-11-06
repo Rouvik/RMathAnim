@@ -20,6 +20,11 @@ class RHist {
             graphGuideColor: 'rgba(255, 255, 255, 0.2)',
             graphDeltaGap: 10,
             graphYDivisions: 10,
+            graphDisplayNums: true,
+            graphDisplayNumColor: 'rgb(128, 0, 128)',
+            graphNumSize: 20,
+            graphNumAdjustX: -10,
+            graphNumFix: 2,
             mode: RHist.DRAWMODE.fill
         }, options);
     }
@@ -51,20 +56,38 @@ class RHist {
         if (this.options.border) {
             RGlobal.cxt.strokeRect(this.translate.x, this.translate.y, this.dimentions.x + 3, this.dimentions.y);
         }
-
+        
         let segmentWidth = this.dimentions.x / this.values.length;
         let baseY = this.hasNegValues ? this.dimentions.y / 2 : this.dimentions.y;
-
+        
         // draw background graph
         RGlobal.cxt.moveTo(this.translate.x, this.translate.y - this.options.graphDeltaGap);
         RGlobal.cxt.lineTo(this.translate.x, this.translate.y + this.dimentions.y + this.options.graphDeltaGap);
-
+        
         let yDivHeight = this.dimentions.y / this.options.graphYDivisions;
-
+        
+        const prevFont = RGlobal.cxt.font;
+        RGlobal.cxt.font = `${this.options.graphNumSize}px CMU Serif`;
+        RGlobal.cxt.fillStyle = this.options.graphDisplayNumColor;
+        
+        if (this.options.graphDisplayNums) {
+            const yDecrement = this.maxVal / (this.hasNegValues ? this.options.graphYDivisions / 2 : this.options.graphYDivisions);
+            for (let currentYVal = this.maxVal, i = 0; i <= this.options.graphYDivisions; i++, currentYVal -= yDecrement) {
+                RGlobal.cxt.fillText(currentYVal.toFixed(this.options.graphNumFix), this.translate.x - this.options.graphDeltaGap - this.options.graphNumSize * this.options.graphNumFix + this.options.graphNumAdjustX, this.translate.y + i * yDivHeight);
+            }
+        }
+        
+        RGlobal.cxt.fillStyle = this.options.fillColor;
+        
         for (let i = 0; i <= this.options.graphYDivisions; i++) {
             RGlobal.cxt.moveTo(this.translate.x - this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
             RGlobal.cxt.lineTo(this.translate.x + this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
+
         }
+
+
+
+        RGlobal.cxt.font = prevFont;
 
         for (let i = 0; i <= this.values.length; i++) {
             RGlobal.cxt.moveTo(this.translate.x + i * segmentWidth, this.translate.y + baseY - this.options.graphDeltaGap);

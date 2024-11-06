@@ -13,7 +13,7 @@ title.interpolerationFn = (x) => x < 0.5 ? 4 * x ** 3 : 1 - ((-2 * x + 2) ** 3) 
 
 // let told = 0;
 
-const hist = new RHist([9, 6, -3, 7, 5, 2], new vec2(0, 6), new vec2(50, 80), new vec2(500, 300), {strokeColor: 'rgb(255, 255, 255)', mode: RHist.DRAWMODE.stroke | RHist.DRAWMODE.fill});
+const hist = new RHist([9, 6, -3, 7, 5, 2], new vec2(0, 6), new vec2(80, 80), new vec2(500, 300), {strokeColor: 'rgb(255, 255, 255)', mode: RHist.DRAWMODE.stroke | RHist.DRAWMODE.fill});
 
 function animate(t) {
     cxt.clearRect(0, 0, sc.width, sc.height);
