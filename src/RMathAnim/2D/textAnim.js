@@ -34,6 +34,7 @@ class RAText extends RAnimation {
         RGlobal.cxt.beginPath();
         
         if(super.update()) {            
+            RGlobal.cxt.font = `${this.options.fontSize}px CMU Serif`;
             RGlobal.cxt.fillStyle = this.backColorFinalStr;            
             RGlobal.cxt.strokeStyle = this.options.lineColor;
             RGlobal.cxt.strokeText(this.content, this.x, this.y, this.maxWidth);
