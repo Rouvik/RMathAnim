@@ -1,5 +1,5 @@
 /**
- * Renders a static histogram, documents will be coming soon 😅
+ * Renders a static histogram, docs will be coming soon 😅
  */
 class RHist {
     static DRAWMODE = {
@@ -8,7 +8,7 @@ class RHist {
     };
 
     constructor(values, xRange, translate, dimentions, options = {}) {
-        this.values = values;
+        this.values = new Array(...values);
         this.translate = translate;
         this.dimentions = dimentions;
         this.xRange = xRange;
@@ -52,6 +52,9 @@ class RHist {
         return this._values;
     }
 
+    /**
+     * Renders the static RHist
+     */
     update() {
         RGlobal.cxt.beginPath();
         RGlobal.cxt.strokeStyle = this.options.strokeColor;
@@ -59,29 +62,29 @@ class RHist {
         if (this.options.border) {
             RGlobal.cxt.strokeRect(this.translate.x, this.translate.y, this.dimentions.x + 3, this.dimentions.y);
         }
-        
+
         let segmentWidth = this.dimentions.x / this.values.length;
         let baseY = this.hasNegValues ? this.dimentions.y / 2 : this.dimentions.y;
-        
+
         // draw background graph
         RGlobal.cxt.moveTo(this.translate.x, this.translate.y - this.options.graphDeltaGap);
         RGlobal.cxt.lineTo(this.translate.x, this.translate.y + this.dimentions.y + this.options.graphDeltaGap);
-        
+
         let yDivHeight = this.dimentions.y / this.options.graphYDivisions;
-        
+
         const prevFont = RGlobal.cxt.font;
         RGlobal.cxt.font = `${this.options.graphNumSize}px CMU Serif`;
         RGlobal.cxt.fillStyle = this.options.graphDisplayNumColor;
-        
+
         if (this.options.graphDisplayNums) {
             const yDecrement = this.maxVal / (this.hasNegValues ? this.options.graphYDivisions / 2 : this.options.graphYDivisions);
             for (let currentYVal = this.maxVal, i = 0; i <= this.options.graphYDivisions; i++, currentYVal -= yDecrement) {
                 RGlobal.cxt.fillText(currentYVal.toFixed(this.options.graphNumFix), this.translate.x - this.options.graphDeltaGap - this.options.graphNumSize * this.options.graphNumFix + this.options.graphNumAdjustX, this.translate.y + i * yDivHeight);
             }
         }
-        
+
         RGlobal.cxt.fillStyle = this.options.fillColor;
-        
+
         for (let i = 0; i <= this.options.graphYDivisions; i++) {
             RGlobal.cxt.moveTo(this.translate.x - this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
             RGlobal.cxt.lineTo(this.translate.x + this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
@@ -125,11 +128,11 @@ class RHist {
 }
 
 /**
- * Renders a static line curve, documents will be coming soon 😅
+ * Renders a static line curve, docs will be coming soon 😅
  */
 class RCurve {
     constructor(points, origin = new vec2(0, 0), xRange, yRange, options = {}) {
-        this.points = points;
+        this.points = new Array(...points);        
         this.origin = origin;
 
         this.xRange = xRange;
@@ -146,11 +149,14 @@ class RCurve {
         }, options);
     }
 
+    /**
+     * Renders the static RCurve
+     */
     update() {
         RGlobal.cxt.beginPath();
         const oldLineWidth = RGlobal.cxt.lineWidth; // save the old line width here
         RGlobal.cxt.lineWidth = 2;
-        
+
         RGlobal.cxt.strokeStyle = this.options.gridColor;
         RGlobal.cxt.fillStyle = this.options.gridTextColor;
 
@@ -162,7 +168,7 @@ class RCurve {
         RGlobal.cxt.lineTo(this.xRange.y, 0);
         RGlobal.cxt.moveTo(0, this.yRange.x);
         RGlobal.cxt.lineTo(0, this.yRange.y);
- 
+
         // grid markings
         const xGridDeltaDist = (this.xRange.y - this.xRange.x) / this.options.gridXDivisions;
 
@@ -178,39 +184,88 @@ class RCurve {
             RGlobal.cxt.lineTo(this.options.gridDeltaWidth, this.yRange.y - i * yGridDeltaDist);
         }
 
-        RGlobal.cxt.stroke();        
-        
+        RGlobal.cxt.stroke();
+
         RGlobal.cxt.beginPath();
         RGlobal.cxt.strokeStyle = this.options.curveColor;
-        
+
         // the actual curve
         RGlobal.cxt.moveTo(this.points[0], this.points[1]);
-        for (let i = 2; i < this.points.length - 1; i+=2) {
+        for (let i = 2; i < this.points.length - 1; i += 2) {
             RGlobal.cxt.lineTo(this.points[i], this.points[i + 1]);
         }
         RGlobal.cxt.stroke();
 
         RGlobal.cxt.scale(1, -1); // reverse the transformations
- 
+
         RGlobal.cxt.font = `${this.options.gridTextSize}px CMU Serif`;
 
         let currentXGridVal = this.xRange.x;
-        
+
         for (let i = 0; i <= this.options.gridXDivisions; i++) {
             RGlobal.cxt.fillText(currentXGridVal, this.xRange.x + (i - 0.5) * xGridDeltaDist, this.options.gridDeltaWidth + this.options.gridTextSize, xGridDeltaDist);
             currentXGridVal += xGridDeltaDist;
         }
-        
+
         let currentYGridVal = this.yRange.x;
-        
+
         RGlobal.cxt.textAlign = 'right';
         for (let i = 0; i <= this.options.gridYDivisions; i++) {
             RGlobal.cxt.fillText(currentYGridVal, -this.options.gridDeltaWidth - this.options.gridTextSize, this.yRange.x + (i + 0.5) * yGridDeltaDist);
             currentYGridVal += yGridDeltaDist;
         }
         RGlobal.cxt.textAlign = 'start';
-        
+
         RGlobal.cxt.translate(-this.origin.x, -this.origin.y);
         RGlobal.cxt.lineWidth = oldLineWidth; // fix the line width
+    }
+}
+
+/**
+ * Renders an animated histogram using the RHist class in composition and extending RAnimation, docs will be coming soon 😅
+*/
+class RAHist extends RAnimation {
+    constructor(values, xRange, translate, dimentions, options = {}) {
+        super();
+        this.values = new Array(...values);
+        this.RHist = new RHist(values, xRange, translate, dimentions, options);
+    }
+    
+    /**
+     * Renders the animated RAHist
+    */
+   update() {
+       if (!super.update()) {
+            super.update();
+            for (let i = 0; i < this.values.length; i++) {
+                this.RHist._values[i] = this.values[i] * this.t_prime;
+            }
+        }
+        
+        this.RHist.update();
+    }
+}
+
+/**
+ * Renders an animated curve using the RCurve class in composition and extending RAnimation, docs will be coming soon 😅
+ */
+class RACurve extends RAnimation {
+    constructor(points, origin = new vec2(0, 0), xRange, yRange, options = {}) {
+        super();
+        this.points = new Array(...points);
+        this.RCurve = new RCurve(points, origin, xRange, yRange, options);
+    }
+
+    /**
+     * Renders the animated RACurve
+     */
+    update() {
+        if (!super.update()) {
+            for (let i = 1; i < this.points.length; i += 2) {
+                this.RCurve.points[i] = this.points[i] * this.t_prime;
+            }
+        }
+        
+        this.RCurve.update();
     }
 }
