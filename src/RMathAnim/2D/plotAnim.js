@@ -131,9 +131,11 @@ class RHist {
  * Renders a static line curve, docs will be coming soon 😅
  */
 class RCurve {
-    constructor(points, origin = new vec2(0, 0), xRange, yRange, options = {}) {
+    constructor(points, origin = new vec2(0, 0), xRange, yRange, scale = new vec2(1, 1), options = {}) {
         this.points = new Array(...points);        
         this.origin = origin;
+
+        this.scale = scale;
 
         this.xRange = xRange;
         this.yRange = yRange;
@@ -156,66 +158,66 @@ class RCurve {
         RGlobal.cxt.beginPath();
         const oldLineWidth = RGlobal.cxt.lineWidth; // save the old line width here
         RGlobal.cxt.lineWidth = 2;
-
+        
         RGlobal.cxt.strokeStyle = this.options.gridColor;
         RGlobal.cxt.fillStyle = this.options.gridTextColor;
-
+        
         RGlobal.cxt.translate(this.origin.x, this.origin.y); // transformations for proper graph orientation
         RGlobal.cxt.scale(1, -1);
 
         // grid
-        RGlobal.cxt.moveTo(this.xRange.x, 0);
-        RGlobal.cxt.lineTo(this.xRange.y, 0);
-        RGlobal.cxt.moveTo(0, this.yRange.x);
-        RGlobal.cxt.lineTo(0, this.yRange.y);
-
+        RGlobal.cxt.moveTo(this.xRange.x * this.scale.x, 0);
+        RGlobal.cxt.lineTo(this.xRange.y * this.scale.x, 0);
+        RGlobal.cxt.moveTo(0, this.yRange.x * this.scale.y);
+        RGlobal.cxt.lineTo(0, this.yRange.y  * this.scale.y);
+        
         // grid markings
         const xGridDeltaDist = (this.xRange.y - this.xRange.x) / this.options.gridXDivisions;
-
+        
         for (let i = 0; i <= this.options.gridXDivisions; i++) {
-            RGlobal.cxt.moveTo(this.xRange.x + i * xGridDeltaDist, -this.options.gridDeltaWidth);
-            RGlobal.cxt.lineTo(this.xRange.x + i * xGridDeltaDist, this.options.gridDeltaWidth);
+            RGlobal.cxt.moveTo((this.xRange.x + i * xGridDeltaDist) * this.scale.x, -this.options.gridDeltaWidth);
+            RGlobal.cxt.lineTo((this.xRange.x + i * xGridDeltaDist) * this.scale.x, this.options.gridDeltaWidth);
         }
-
+        
         const yGridDeltaDist = (this.yRange.y - this.yRange.x) / this.options.gridYDivisions;
-
+        
         for (let i = 0; i <= this.options.gridYDivisions; i++) {
-            RGlobal.cxt.moveTo(-this.options.gridDeltaWidth, this.yRange.y - i * yGridDeltaDist);
-            RGlobal.cxt.lineTo(this.options.gridDeltaWidth, this.yRange.y - i * yGridDeltaDist);
+            RGlobal.cxt.moveTo(-this.options.gridDeltaWidth, (this.yRange.y - i * yGridDeltaDist) * this.scale.y);
+            RGlobal.cxt.lineTo(this.options.gridDeltaWidth, (this.yRange.y - i * yGridDeltaDist) * this.scale.y);
         }
 
         RGlobal.cxt.stroke();
-
+        
         RGlobal.cxt.beginPath();
         RGlobal.cxt.strokeStyle = this.options.curveColor;
-
+        
         // the actual curve
-        RGlobal.cxt.moveTo(this.points[0], this.points[1]);
+        RGlobal.cxt.moveTo(this.points[0] * this.scale.x, this.points[1] * this.scale.y);
         for (let i = 2; i < this.points.length - 1; i += 2) {
-            RGlobal.cxt.lineTo(this.points[i], this.points[i + 1]);
+            RGlobal.cxt.lineTo(this.points[i] * this.scale.x, this.points[i + 1] * this.scale.y);
         }
         RGlobal.cxt.stroke();
-
+        
         RGlobal.cxt.scale(1, -1); // reverse the transformations
-
+        
         RGlobal.cxt.font = `${this.options.gridTextSize}px CMU Serif`;
-
+        
         let currentXGridVal = this.xRange.x;
-
+        
         for (let i = 0; i <= this.options.gridXDivisions; i++) {
-            RGlobal.cxt.fillText(currentXGridVal, this.xRange.x + (i - 0.5) * xGridDeltaDist, this.options.gridDeltaWidth + this.options.gridTextSize, xGridDeltaDist);
+            RGlobal.cxt.fillText(currentXGridVal.toFixed(2), (this.xRange.x + (i - 0.5) * xGridDeltaDist) * this.scale.x, (this.options.gridDeltaWidth + this.options.gridTextSize), xGridDeltaDist * this.scale.x);
             currentXGridVal += xGridDeltaDist;
         }
-
+        
         let currentYGridVal = this.yRange.x;
-
+        
         RGlobal.cxt.textAlign = 'right';
         for (let i = 0; i <= this.options.gridYDivisions; i++) {
-            RGlobal.cxt.fillText(currentYGridVal, -this.options.gridDeltaWidth - this.options.gridTextSize, this.yRange.x + (i + 0.5) * yGridDeltaDist);
+            RGlobal.cxt.fillText(currentYGridVal.toFixed(2), (-this.options.gridDeltaWidth - this.options.gridTextSize), (this.yRange.x + (i + 0.5) * yGridDeltaDist) * this.scale.y);
             currentYGridVal += yGridDeltaDist;
         }
         RGlobal.cxt.textAlign = 'start';
-
+        
         RGlobal.cxt.translate(-this.origin.x, -this.origin.y);
         RGlobal.cxt.lineWidth = oldLineWidth; // fix the line width
     }
@@ -250,10 +252,10 @@ class RAHist extends RAnimation {
  * Renders an animated curve using the RCurve class in composition and extending RAnimation, docs will be coming soon 😅
  */
 class RACurve extends RAnimation {
-    constructor(points, origin = new vec2(0, 0), xRange, yRange, options = {}) {
+    constructor(points, origin = new vec2(0, 0), xRange, yRange, scale, options = {}) {
         super();
         this.points = new Array(...points);
-        this.RCurve = new RCurve(points, origin, xRange, yRange, options);
+        this.RCurve = new RCurve(points, origin, xRange, yRange, scale, options);
     }
 
     /**
