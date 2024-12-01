@@ -41,9 +41,26 @@ class RAnimation {
      */
     constructor(interpolerationFn = (x) => x, steps = 100) {
         this.interpolerationFn = interpolerationFn;
-        this.ti = 1 / steps;
+        this._steps = steps;
+        this.ti = 1 / this._steps;
         this.t = 0;
         this.t_prime = 0;
+    }
+
+    /**
+     * Update steps when required and also update ti in the process as it depends on steps
+     * @param {number} v The steps to set to
+     */
+    set steps(v) {
+        this._steps = v;
+        this.ti = 1 / this._steps;
+    }
+
+    /**
+     * Returns the number of steps the animation requires
+     */
+    get steps() {
+        return this._steps;
     }
 
     /**
@@ -60,3 +77,55 @@ class RAnimation {
         return false;
     }
 }
+
+class RComposition {
+    constructor(animRules) {
+        this.animRules = animRules;
+        this.stepsDone = 0;
+        this.currentAnimation = 0;
+
+        // reset steps according to animation requirements
+        for (let i = 0; i < this.animRules.length; i++) {
+            if (!this.animRules[i].steps) {
+                throw new Error("[RComposition Error] Bad animation rule set, missing steps");
+            }
+        }
+    }
+
+    update() {        
+        if (this.currentAnimation > (this.animRules.length - 1)) {
+            for (const animation of this.animRules) {
+                animation.func();
+            }
+            return;
+        }
+
+        for (let i = 0; i <= this.currentAnimation; i++) {
+            this.animRules[i].func();
+        }
+
+        if (this.stepsDone++ >= this.animRules[this.currentAnimation].steps) {
+            this.currentAnimation++;
+            this.stepsDone = 0;
+        }
+    }
+}
+
+// const obj = [
+//     {
+//         animFn: tgt.update(),
+//         steps: 500,
+//     },
+//     {
+//         animFn: () => {
+//             tgt2.update();
+//             // some code for tgt2 and tgt3
+//             tgt3.update();
+//         },
+//         steps: 300,
+//     },
+//     {
+//         animFn: tgt4.update(),
+//         steps: 0
+//     }
+// ];
