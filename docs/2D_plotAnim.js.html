@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: 2D/plotAnim.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: 2D/plotAnim.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Renders a static histogram, docs will be coming soon 😅
+ */
+class RHist {
+    static DRAWMODE = {
+        stroke: 1,
+        fill: 2
+    };
+
+    constructor(values, xRange, translate, dimentions, options = {}) {
+        this.values = new Array(...values);
+        this.translate = translate;
+        this.dimentions = dimentions;
+        this.xRange = xRange;
+
+        this.options = Object.assign({
+            strokeColor: 'rgb(205, 92, 92)',
+            fillColor: 'rgb(135, 206, 235)',
+            segmentGap: 0,
+            heightGap: 0,
+            border: false,
+            displayGraphGuide: true,
+            graphGuideColor: 'rgba(255, 255, 255, 0.2)',
+            graphDeltaGap: 10,
+            graphYDivisions: 10,
+            graphDisplayNums: true,
+            graphDisplayNumColor: 'rgb(128, 0, 128)',
+            graphNumSize: 20,
+            graphNumAdjustX: -10,
+            graphNumFix: 2,
+            mode: RHist.DRAWMODE.fill
+        }, options);
+    }
+
+    set values(v) {
+        this._values = v;
+        this.maxVal = this.values[0];
+        this.hasNegValues = false;
+        for (const val of this._values) {
+            if (val &lt; 0) {
+                this.hasNegValues = true;
+            }
+
+            const absVal = Math.abs(val);
+            if (absVal > this.maxVal) {
+                this.maxVal = absVal;
+            }
+        }
+    }
+
+    get values() {
+        return this._values;
+    }
+
+    /**
+     * Renders the static RHist
+     */
+    update() {
+        RGlobal.cxt.beginPath();
+        RGlobal.cxt.strokeStyle = this.options.strokeColor;
+        RGlobal.cxt.fillStyle = this.options.fillColor;
+        if (this.options.border) {
+            RGlobal.cxt.strokeRect(this.translate.x, this.translate.y, this.dimentions.x + 3, this.dimentions.y);
+        }
+
+        let segmentWidth = this.dimentions.x / this.values.length;
+        let baseY = this.hasNegValues ? this.dimentions.y / 2 : this.dimentions.y;
+
+        // draw background graph
+        RGlobal.cxt.moveTo(this.translate.x, this.translate.y - this.options.graphDeltaGap);
+        RGlobal.cxt.lineTo(this.translate.x, this.translate.y + this.dimentions.y + this.options.graphDeltaGap);
+
+        let yDivHeight = this.dimentions.y / this.options.graphYDivisions;
+
+        const prevFont = RGlobal.cxt.font;
+        RGlobal.cxt.font = `${this.options.graphNumSize}px CMU Serif`;
+        RGlobal.cxt.fillStyle = this.options.graphDisplayNumColor;
+
+        if (this.options.graphDisplayNums) {
+            const yDecrement = this.maxVal / (this.hasNegValues ? this.options.graphYDivisions / 2 : this.options.graphYDivisions);
+            for (let currentYVal = this.maxVal, i = 0; i &lt;= this.options.graphYDivisions; i++, currentYVal -= yDecrement) {
+                RGlobal.cxt.fillText(currentYVal.toFixed(this.options.graphNumFix), this.translate.x - this.options.graphDeltaGap - this.options.graphNumSize * this.options.graphNumFix + this.options.graphNumAdjustX, this.translate.y + i * yDivHeight);
+            }
+        }
+
+        RGlobal.cxt.fillStyle = this.options.fillColor;
+
+        for (let i = 0; i &lt;= this.options.graphYDivisions; i++) {
+            RGlobal.cxt.moveTo(this.translate.x - this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
+            RGlobal.cxt.lineTo(this.translate.x + this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
+
+        }
+
+
+
+        RGlobal.cxt.font = prevFont;
+
+        for (let i = 0; i &lt;= this.values.length; i++) {
+            RGlobal.cxt.moveTo(this.translate.x + i * segmentWidth, this.translate.y + baseY - this.options.graphDeltaGap);
+            RGlobal.cxt.lineTo(this.translate.x + i * segmentWidth, this.translate.y + baseY + this.options.graphDeltaGap);
+        }
+
+        RGlobal.cxt.stroke();
+
+        if (this.options.displayGraphGuide) { // display horizontal graph guide
+            RGlobal.cxt.strokeStyle = this.options.graphGuideColor;
+            for (let i = 0; i &lt;= this.options.graphYDivisions; i++) {
+                RGlobal.cxt.moveTo(this.translate.x + this.options.graphDeltaGap, this.translate.y + i * yDivHeight);
+                RGlobal.cxt.lineTo(this.translate.x + this.dimentions.x, this.translate.y + i * yDivHeight);
+            }
+            RGlobal.cxt.stroke();
+        }
+
+        // draw the histogram here
+        RGlobal.cxt.strokeStyle = this.options.strokeColor;
+        for (let i = 0; i &lt; this.values.length; i++) {
+            let colHeight = this.values[i] / this.maxVal * baseY - this.options.heightGap;
+
+            if (this.options.mode &amp; RHist.DRAWMODE.fill) {
+                RGlobal.cxt.fillRect(this.translate.x + i * segmentWidth + this.options.segmentGap / 2 + 1, this.translate.y + baseY - colHeight, segmentWidth - this.options.segmentGap + 1, colHeight);
+            }
+
+            if (this.options.mode &amp; RHist.DRAWMODE.stroke) {
+                RGlobal.cxt.strokeRect(this.translate.x + i * segmentWidth + this.options.segmentGap / 2 + 1, this.translate.y + baseY - colHeight, segmentWidth - this.options.segmentGap + 1, colHeight);
+            }
+        }
+    }
+}
+
+/**
+ * Renders a static line curve, docs will be coming soon 😅
+ */
+class RCurve {
+    constructor(points, origin = new vec2(0, 0), xRange, yRange, scale = new vec2(1, 1), options = {}) {
+        this.points = new Array(...points);        
+        this.origin = origin;
+
+        this.scale = scale;
+
+        this.xRange = xRange;
+        this.yRange = yRange;
+
+        this.options = Object.assign({
+            curveColor: 'rgb(255, 128, 255)',
+            gridColor: 'rgb(255, 255, 255)',
+            gridTextColor: 'rgb(255, 255, 255)',
+            gridTextSize: 10,
+            gridDeltaWidth: 5,
+            gridXDivisions: 10,
+            gridYDivisions: 10,
+        }, options);
+    }
+
+    /**
+     * Renders the static RCurve
+     */
+    update() {
+        RGlobal.cxt.beginPath();
+        const oldLineWidth = RGlobal.cxt.lineWidth; // save the old line width here
+        RGlobal.cxt.lineWidth = 2;
+        
+        RGlobal.cxt.strokeStyle = this.options.gridColor;
+        RGlobal.cxt.fillStyle = this.options.gridTextColor;
+        
+        RGlobal.cxt.translate(this.origin.x, this.origin.y); // transformations for proper graph orientation
+        RGlobal.cxt.scale(1, -1);
+
+        // grid
+        RGlobal.cxt.moveTo(this.xRange.x * this.scale.x, 0);
+        RGlobal.cxt.lineTo(this.xRange.y * this.scale.x, 0);
+        RGlobal.cxt.moveTo(0, this.yRange.x * this.scale.y);
+        RGlobal.cxt.lineTo(0, this.yRange.y  * this.scale.y);
+        
+        // grid markings
+        const xGridDeltaDist = (this.xRange.y - this.xRange.x) / this.options.gridXDivisions;
+        
+        for (let i = 0; i &lt;= this.options.gridXDivisions; i++) {
+            RGlobal.cxt.moveTo((this.xRange.x + i * xGridDeltaDist) * this.scale.x, -this.options.gridDeltaWidth);
+            RGlobal.cxt.lineTo((this.xRange.x + i * xGridDeltaDist) * this.scale.x, this.options.gridDeltaWidth);
+        }
+        
+        const yGridDeltaDist = (this.yRange.y - this.yRange.x) / this.options.gridYDivisions;
+        
+        for (let i = 0; i &lt;= this.options.gridYDivisions; i++) {
+            RGlobal.cxt.moveTo(-this.options.gridDeltaWidth, (this.yRange.y - i * yGridDeltaDist) * this.scale.y);
+            RGlobal.cxt.lineTo(this.options.gridDeltaWidth, (this.yRange.y - i * yGridDeltaDist) * this.scale.y);
+        }
+
+        RGlobal.cxt.stroke();
+        
+        RGlobal.cxt.beginPath();
+        RGlobal.cxt.strokeStyle = this.options.curveColor;
+        
+        // the actual curve
+        RGlobal.cxt.moveTo(this.points[0] * this.scale.x, this.points[1] * this.scale.y);
+        for (let i = 2; i &lt; this.points.length - 1; i += 2) {
+            RGlobal.cxt.lineTo(this.points[i] * this.scale.x, this.points[i + 1] * this.scale.y);
+        }
+        RGlobal.cxt.stroke();
+        
+        RGlobal.cxt.scale(1, -1); // reverse the transformations
+        
+        RGlobal.cxt.font = `${this.options.gridTextSize}px CMU Serif`;
+        
+        let currentXGridVal = this.xRange.x;
+        
+        for (let i = 0; i &lt;= this.options.gridXDivisions; i++) {
+            RGlobal.cxt.fillText(currentXGridVal.toFixed(2), (this.xRange.x + (i - 0.5) * xGridDeltaDist) * this.scale.x, (this.options.gridDeltaWidth + this.options.gridTextSize), xGridDeltaDist * this.scale.x);
+            currentXGridVal += xGridDeltaDist;
+        }
+        
+        let currentYGridVal = this.yRange.x;
+        
+        RGlobal.cxt.textAlign = 'right';
+        for (let i = 0; i &lt;= this.options.gridYDivisions; i++) {
+            RGlobal.cxt.fillText(currentYGridVal.toFixed(2), (-this.options.gridDeltaWidth - this.options.gridTextSize), (this.yRange.x + (i + 0.5) * yGridDeltaDist) * this.scale.y);
+            currentYGridVal += yGridDeltaDist;
+        }
+        RGlobal.cxt.textAlign = 'start';
+        
+        RGlobal.cxt.translate(-this.origin.x, -this.origin.y);
+        RGlobal.cxt.lineWidth = oldLineWidth; // fix the line width
+    }
+}
+
+/**
+ * Renders an animated histogram using the RHist class in composition and extending RAnimation, docs will be coming soon 😅
+*/
+class RAHist extends RAnimation {
+    constructor(values, xRange, translate, dimentions, options = {}) {
+        super();
+        this.values = new Array(...values);
+        this.RHist = new RHist(values, xRange, translate, dimentions, options);
+    }
+    
+    /**
+     * Renders the animated RAHist
+    */
+   update() {
+       if (!super.update()) {
+            super.update();
+            for (let i = 0; i &lt; this.values.length; i++) {
+                this.RHist._values[i] = this.values[i] * this.t_prime;
+            }
+        }
+        
+        this.RHist.update();
+    }
+}
+
+/**
+ * Renders an animated curve using the RCurve class in composition and extending RAnimation, docs will be coming soon 😅
+ */
+class RACurve extends RAnimation {
+    constructor(points, origin = new vec2(0, 0), xRange, yRange, scale, options = {}) {
+        super();
+        this.points = new Array(...points);
+        this.RCurve = new RCurve(points, origin, xRange, yRange, scale, options);
+    }
+
+    /**
+     * Renders the animated RACurve
+     */
+    update() {
+        if (!super.update()) {
+            for (let i = 1; i &lt; this.points.length; i += 2) {
+                this.RCurve.points[i] = this.points[i] * this.t_prime;
+            }
+        }
+        
+        this.RCurve.update();
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="RACurve.html">RACurve</a></li><li><a href="RAHist.html">RAHist</a></li><li><a href="RAHueVector.html">RAHueVector</a></li><li><a href="RAPoly.html">RAPoly</a></li><li><a href="RAText.html">RAText</a></li><li><a href="RAVector.html">RAVector</a></li><li><a href="RAnimation.html">RAnimation</a></li><li><a href="RComposition.html">RComposition</a></li><li><a href="RCurve.html">RCurve</a></li><li><a href="RGlobal.html">RGlobal</a></li><li><a href="RHist.html">RHist</a></li><li><a href="RPoly.html">RPoly</a></li><li><a href="RVector.html">RVector</a></li><li><a href="vec2.html">vec2</a></li><li><a href="vec3.html">vec3</a></li></ul><h3>Global</h3><ul><li><a href="global.html#CreateCanvas">CreateCanvas</a></li><li><a href="global.html#CreateCanvasRecorder">CreateCanvasRecorder</a></li><li><a href="global.html#RColorStrToVec">RColorStrToVec</a></li><li><a href="global.html#RHueRotate">RHueRotate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Tue Dec 03 2024 20:59:13 GMT+0530 (India Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

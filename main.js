@@ -15,14 +15,21 @@ title.interpolerationFn = (x) => x < 0.5 ? 4 * x ** 3 : 1 - ((-2 * x + 2) ** 3) 
 const animVec = new RAVector(new vec2(200, 200), new vec2(400, 200));
 animVec.interpolerationFn = (x) => x < 0.5 ? 4 * x ** 3 : 1 - ((-2 * x + 2) ** 3) / 2; // quadratic ease-in-out
 
+const animVec2 = new RAVector(new vec2(0, 0), new vec2(0, 100), {color: 'rgb(255, 0, 255)'});
+animVec2.interpolerationFn = (x) => x < 0.5 ? 4 * x ** 3 : 1 - ((-2 * x + 2) ** 3) / 2; // quadratic ease-in-out
+
 const animComposition = new RComposition([
     {
         func: () => title.update(),
-        steps: title.steps
+        steps: title.steps + 100
     },
     {
-        func: () => animVec.update(),
-        steps: animVec.steps
+        func: () => {
+            animVec.update();
+            animVec2.RVector.start = animVec.RVector.tip;
+            animVec2.update();
+        },
+        steps: Math.max(animVec.steps, animVec2.steps)
     }
 ]);
 

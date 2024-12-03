@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: RGlobal</title>
+    <title>JSDoc: Class: RComposition</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: RGlobal</h1>
+    <h1 class="page-title">Class: RComposition</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>RGlobal<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>RComposition<span class="signature">(animRules)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">A container class to store the CanvasRenderingContext2D and the HTMLCanvasElement to be referred by other animatables</div>
+            <div class="class-description">Base Animation compositions class</div>
         
     
 </header>
@@ -45,19 +45,72 @@
     
 
     
-    <h4 class="name" id="RGlobal"><span class="type-signature"></span>new RGlobal<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RComposition"><span class="type-signature"></span>new RComposition<span class="signature">(animRules)</span><span class="type-signature"></span></h4>
     
 
     
 
 
 
+<div class="description">
+    Creates a composition to animate animatables in sequencial order and even if required merge animations<div style="background: greenyellow; border: 3px solid green; border-radius: 5px; padding: 5px; overflow-x:auto;"><b style="font-size: 1.3rem;">Composition ruleset:</b><br><pre>const obj = [{    animFn: tgt.update(),    steps: tgt.steps + skipSteps,},{    animFn: () => {         tgt2.update();         // some code for tgt2 and tgt3         tgt3.update();    },    steps: Math.max(tgt2.steps, tgt3.steps),},{    animFn: tgt4.update(),    steps: 400}];</pre></div>
+</div>
 
 
 
 
 
 
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>animRules</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The object containing the animation ruleset</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -93,7 +146,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseGraphics.js.html">baseGraphics.js</a>, <a href="baseGraphics.js.html#line4">line 4</a>
+        <a href="baseGraphics.js.html">baseGraphics.js</a>, <a href="baseGraphics.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -149,7 +202,7 @@
     
 
     
-    <h4 class="name" id=".setCanvas"><span class="type-signature">(static) </span>setCanvas<span class="signature">(sc)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -157,7 +210,7 @@
 
 
 <div class="description">
-    Sets the HTMLCanvasElement for RGlobal
+    Calls update on the animatables in sqeuencial order
 </div>
 
 
@@ -166,55 +219,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>sc</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">HTMLCanvasElement</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The HTMLCanvasElement to set to RGlobal.sc</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -250,144 +254,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseGraphics.js.html">baseGraphics.js</a>, <a href="baseGraphics.js.html#line24">line 24</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id=".setContext"><span class="type-signature">(static) </span>setContext<span class="signature">(cxt)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Sets the canvas rendering context for RGlobal
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>cxt</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">CanvasRenderingContext2D</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The CanvasRenderingContext2D to set to RGlobal.cxt</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="baseGraphics.js.html">baseGraphics.js</a>, <a href="baseGraphics.js.html#line12">line 12</a>
+        <a href="baseGraphics.js.html">baseGraphics.js</a>, <a href="baseGraphics.js.html#line128">line 128</a>
     </li></ul></dd>
     
 

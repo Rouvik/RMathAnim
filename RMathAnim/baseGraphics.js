@@ -78,7 +78,35 @@ class RAnimation {
     }
 }
 
+/**
+ * Base Animation compositions class
+ */
 class RComposition {
+    /**
+     * Creates a composition to animate animatables in sequencial order and even if required merge animations
+     * <div style="background: greenyellow; border: 3px solid green; border-radius: 5px; padding: 5px; overflow-x:auto;">
+     * <b style="font-size: 1.3rem;">Composition ruleset:</b><br>
+     * <pre>const obj = [
+     * {
+     *     animFn: tgt.update(),
+     *     steps: tgt.steps + skipSteps,
+     * },
+     * {
+     *     animFn: () => {
+     *          tgt2.update();
+     *          // some code for tgt2 and tgt3
+     *          tgt3.update();
+     *     },
+     *     steps: Math.max(tgt2.steps, tgt3.steps),
+     * },
+     * {
+     *     animFn: tgt4.update(),
+     *     steps: 400
+     * }];
+     * </pre>
+     * </div>
+     * @param {Object} animRules The object containing the animation ruleset
+     */
     constructor(animRules) {
         this.animRules = animRules;
         this.stepsDone = 0;
@@ -89,10 +117,15 @@ class RComposition {
             if (!this.animRules[i].steps) {
                 throw new Error("[RComposition Error] Bad animation rule set, missing steps");
             }
+
+            this.animRules[i].skip = this.animRules[i].skip | 0;
         }
     }
 
-    update() {        
+    /**
+     * Calls update on the animatables in sqeuencial order
+     */
+    update() {
         if (this.currentAnimation > (this.animRules.length - 1)) {
             for (const animation of this.animRules) {
                 animation.func();
@@ -110,22 +143,3 @@ class RComposition {
         }
     }
 }
-
-// const obj = [
-//     {
-//         animFn: tgt.update(),
-//         steps: 500,
-//     },
-//     {
-//         animFn: () => {
-//             tgt2.update();
-//             // some code for tgt2 and tgt3
-//             tgt3.update();
-//         },
-//         steps: 300,
-//     },
-//     {
-//         animFn: tgt4.update(),
-//         steps: 0
-//     }
-// ];
