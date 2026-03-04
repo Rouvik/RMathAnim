@@ -1,0 +1,5 @@
+# Ignore vscode stuff
+.vscode/
+
+# Ignore any output files and folders
+docs/
